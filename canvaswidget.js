@@ -15,16 +15,13 @@ function drawPixel(event, ctx){
 	let pixelLoc = [event.clientX - rect.left, event.clientY - rect.top];
 	//console.log(pixelLoc);
 	let location = [Math.floor(pixelLoc[0]/10), Math.floor(pixelLoc[1]/10)];
+		
 	
-	//if lastcell == location do nothing, else
-	lastcell = location;
-	//rewrite this to include shading on the adjacent cells
-	
-	context.fillStyle='#000000';
-	if(canvasContent[location[1]][location[0]] != 1) {
+	if(canvasContent[location[1]][location[0]] < 0.8) {
 		//set the content array (fed to ANN) to have a positive value at the correct index
-		canvasContent[location[1]][location[0]] = 1;
+		canvasContent[location[1]][location[0]] = 0.8 + (Math.random()*0.2);
 		//console.log(location);
+		context.fillStyle='#000000';
 		ctx.fillRect(location[0]*10, location[1]*10, 10,10);
 	}
 	
@@ -38,7 +35,7 @@ function drawPixel(event, ctx){
 	for(let i = 0; i<4; i++){
 		let coords = [adjacent_cells[i][0]*10, adjacent_cells[i][1]*10];
 		//console.log(coords);
-		if(canvasContent[adjacent_cells[i][1]][adjacent_cells[i][0]] < 1){	
+		if(canvasContent[adjacent_cells[i][1]][adjacent_cells[i][0]] < 0.8){	
 			ctx.fillRect(coords[0],coords[1], 10, 10);
 			canvasContent[adjacent_cells[i][1]][adjacent_cells[i][0]] = Math.random() * 0.4;
 		}
@@ -84,7 +81,23 @@ function generateChart(prediction){
 		type: 'bar'
 	}
 	];
-	Plotly.newPlot(results, data);
+	let layout = {
+		'autosize':false,
+		'showlegend': false,
+		'margin': {
+			't': 20,
+			'b': 20
+		},
+		'yaxis': {
+			'automargin':false,
+		},
+		'xaxis': {
+			'tickmode': 'linear',
+		},
+		'height':280,
+		'width':700		
+	};
+	Plotly.newPlot(results, data, layout, {staticPlot: true});
 }
 var model =  importModel();
 let canvas = document.querySelector('#canvas');
