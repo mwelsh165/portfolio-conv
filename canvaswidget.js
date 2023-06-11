@@ -82,10 +82,13 @@ function generateChart(prediction){
 	}
 	];
 	let layout = {
+		'title': {
+			'text':'Prediction Certainty'
+		},
 		'autosize':false,
 		'showlegend': false,
 		'margin': {
-			't': 20,
+			't': 40,
 			'b': 20
 		},
 		'yaxis': {
