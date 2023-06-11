@@ -4,7 +4,7 @@
 */
 //COULD DO: include drawing the canvas and button in this file. maybe make it a class?
 async function importModel(){
-	let m = await tf.loadLayersModel('conv/model.json');
+	let m = await tf.loadLayersModel('./model.json');
 	return m
 }
 function drawPixel(event, ctx){

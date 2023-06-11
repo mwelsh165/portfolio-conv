@@ -1,8 +1,0 @@
-js widget inside an iframe?
-then you can just put the iframe inside the website when its done. makes the whole thing self-contained
-iframe -> canvas widget -> tensorflowjs running classifier. could display certainty
-different files for each thing makes it easier
-
-to do:
-make the predictions graph look nicer
-improve the accuracy of the classifier. maybe add some noise to the drawing based on mouse distance to adjacent pixels?
