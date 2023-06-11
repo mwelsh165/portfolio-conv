@@ -64,10 +64,10 @@ async function callANN(){
 	//figure out shape for single example in python notebook
 	let example = tf.tensor(canvasContent);
 	console.log(example.shape);
-	//example = tf.expandDims(example);
-	//example = tf.expandDims(example,example.rank);
+	example = tf.expandDims(example);
+	example = tf.expandDims(example,example.rank);
 	//console.log(example.dataSync());
-	example = example.reshape([1,784]);
+	//example = example.reshape([1,784]);
 	const prediction = m.predict(example).dataSync();
 	console.log(prediction);
 	let mostLikely = prediction.indexOf(Math.max(...prediction));
