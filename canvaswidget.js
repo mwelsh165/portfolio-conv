@@ -13,7 +13,7 @@ function drawPixel(event, ctx){
 	
 	//get exact pixel location within grid (for shading)
 	let pixelLoc = [event.clientX - rect.left, event.clientY - rect.top];
-	console.log(pixelLoc);
+	//console.log(pixelLoc);
 	let location = [Math.floor(pixelLoc[0]/10), Math.floor(pixelLoc[1]/10)];
 	
 	//if lastcell == location do nothing, else
@@ -24,7 +24,7 @@ function drawPixel(event, ctx){
 	if(canvasContent[location[1]][location[0]] != 1) {
 		//set the content array (fed to ANN) to have a positive value at the correct index
 		canvasContent[location[1]][location[0]] = 1;
-		console.log(location);
+		//console.log(location);
 		ctx.fillRect(location[0]*10, location[1]*10, 10,10);
 	}
 	
@@ -37,10 +37,10 @@ function drawPixel(event, ctx){
 	context.fillStyle='#DDDDDD'
 	for(let i = 0; i<4; i++){
 		let coords = [adjacent_cells[i][0]*10, adjacent_cells[i][1]*10];
-		console.log(coords);
+		//console.log(coords);
 		if(canvasContent[adjacent_cells[i][1]][adjacent_cells[i][0]] < 1){	
 			ctx.fillRect(coords[0],coords[1], 10, 10);
-			canvasContent[adjacent_cells[i][1]][adjacent_cells[i][0]] = Math.random() * 0.3;
+			canvasContent[adjacent_cells[i][1]][adjacent_cells[i][0]] = Math.random() * 0.4;
 		}
 	}
 		//canvasContent[location[0]+(27*location[1])] += 
@@ -63,9 +63,11 @@ async function callANN(){
 	//not the right shape
 	//figure out shape for single example in python notebook
 	let example = tf.tensor(canvasContent);
-	example = tf.expandDims(example);
-	example = tf.expandDims(example,example.rank);
-	console.log(example.dataSync());
+	console.log(example.shape);
+	//example = tf.expandDims(example);
+	//example = tf.expandDims(example,example.rank);
+	//console.log(example.dataSync());
+	example = example.reshape([1,784]);
 	const prediction = m.predict(example).dataSync();
 	console.log(prediction);
 	let mostLikely = prediction.indexOf(Math.max(...prediction));
